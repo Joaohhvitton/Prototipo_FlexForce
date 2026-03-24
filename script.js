@@ -4,13 +4,14 @@ const searchForm = document.getElementById("searchForm");
 const documentSearch = document.getElementById("documentSearch");
 const resultSection = document.getElementById("resultSection");
 const loadingOverlay = document.getElementById("loadingOverlay");
-const searchButton = searchForm.querySelector("button[type='submit']");
+const searchButton = searchForm?.querySelector("button[type='submit']");
+
 let isSearching = false;
 
 const middlewareData = [
   {
     dataCriacao: "23/03/2026 - 14:25",
-    dataAlteracao: "24/03/2026 15:00",
+    dataAlteracao: "24/03/2026 - 15:00",
     documento: "08005813180",
     numeroSerie: "2256FD8F4021",
     idTerminal: "00646090",
@@ -19,11 +20,11 @@ const middlewareData = [
   },
   {
     dataCriacao: "20/03/2026 - 14:30",
-    dataAlteracao: "24/03/2026 12:00",
+    dataAlteracao: "24/03/2026 - 12:00",
     documento: "08005813180",
     numeroSerie: "2256FD8F6025",
-    idTerminal: "00646090",
-    iccId: "8955555555555555",
+    idTerminal: "00646091",
+    iccId: "8955555555555556",
     status: "Credenciada"
   }
 ];
@@ -36,49 +37,56 @@ const statusClassMap = {
   descredenciada: "status-descredenciada"
 };
 
-configButton.addEventListener("click", () => {
-  const isHidden = configSubmenu.hasAttribute("hidden");
-  if (isHidden) {
-    configSubmenu.removeAttribute("hidden");
-    configButton.setAttribute("aria-expanded", "true");
-    return;
-  }
+if (configButton && configSubmenu) {
+  configButton.addEventListener("click", () => {
+    const isHidden = configSubmenu.hasAttribute("hidden");
 
-  configSubmenu.setAttribute("hidden", "");
-  configButton.setAttribute("aria-expanded", "false");
-});
-
-searchForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  if (isSearching) {
-    return;
-  }
-
-  const documentValue = documentSearch.value.replace(/\D/g, "");
-  documentSearch.value = documentValue;
-
-  isSearching = true;
-  setLoading(true);
-  setSearchButtonState(true);
-  window.setTimeout(() => {
-    if (documentValue.length !== 11 && documentValue.length !== 14) {
-      renderFeedback("Informe um CPF (11 dígitos) ou CNPJ (14 dígitos) válido.");
-      finalizeSearch();
+    if (isHidden) {
+      configSubmenu.removeAttribute("hidden");
+      configButton.setAttribute("aria-expanded", "true");
       return;
     }
 
-    const results = middlewareData.filter((item) => item.documento.replace(/\D/g, "") === documentValue);
+    configSubmenu.setAttribute("hidden", "");
+    configButton.setAttribute("aria-expanded", "false");
+  });
+}
 
-    if (results.length === 0) {
-      renderFeedback("Nenhum terminal encontrado para o CPF/CNPJ informado.");
+if (searchForm && documentSearch && resultSection && loadingOverlay && searchButton) {
+  searchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (isSearching) return;
+
+    const documentValue = documentSearch.value.replace(/\D/g, "");
+    documentSearch.value = documentValue;
+
+    isSearching = true;
+    setLoading(true);
+    setSearchButtonState(true);
+
+    window.setTimeout(() => {
+      if (documentValue.length !== 11 && documentValue.length !== 14) {
+        renderFeedback("Informe um CPF (11 dígitos) ou CNPJ (14 dígitos) válido.");
+        finalizeSearch();
+        return;
+      }
+
+      const results = middlewareData.filter(
+        (item) => item.documento.replace(/\D/g, "") === documentValue
+      );
+
+      if (results.length === 0) {
+        renderFeedback("Nenhum terminal encontrado para o CPF/CNPJ informado.");
+        finalizeSearch();
+        return;
+      }
+
+      renderResults(results);
       finalizeSearch();
-      return;
-    }
-
-    renderResults(results);
-    finalizeSearch();
-  }, 3000);
-});
+    }, 3000);
+  });
+}
 
 function renderFeedback(message) {
   resultSection.innerHTML = `<p class="feedback">${message}</p>`;
