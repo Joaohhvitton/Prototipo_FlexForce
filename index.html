@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlexForce - Consulta Status Middleware</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <div class="client-select">
+          <span>Cliente...</span>
+          <span class="caret">▾</span>
+        </div>
+
+        <nav class="menu">
+          <a href="#" class="menu-item">Dashboard</a>
+          <a href="#" class="menu-item">Dados do Cliente</a>
+          <a href="#" class="menu-item active-item">Financeiro</a>
+          <a href="#" class="menu-item">Vendas</a>
+          <a href="#" class="menu-item">Terminais</a>
+          <a href="#" class="menu-item">Parâmetros Comerciais</a>
+          <a href="#" class="menu-item">Ordem de Serviços</a>
+          <a href="#" class="menu-item">Fila de Pré-Inativação</a>
+
+          <div class="menu-group">
+            <button id="configButton" class="menu-item menu-button" type="button" aria-expanded="false">
+              Configurações
+              <span class="arrow">▾</span>
+            </button>
+            <div id="configSubmenu" class="submenu" hidden>
+              <button id="openMiddlewareQuery" class="submenu-item" type="button">
+                Consulta Status Middleware
+              </button>
+            </div>
+          </div>
+
+          <a href="#" class="menu-item">Sair</a>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <header class="topbar">
+          <button class="menu-toggle" type="button">☰</button>
+          <span class="env-tag">Production</span>
+        </header>
+
+        <section class="query-card">
+          <h1>Consulta Status Middleware</h1>
+
+          <form id="searchForm" class="search-row">
+            <input
+              id="documentSearch"
+              type="text"
+              inputmode="numeric"
+              placeholder="Digite o CPF/CNPJ (somente números)"
+              value="08005813180"
+              maxlength="14"
+              autocomplete="off"
+            />
+            <button type="submit">Pesquisar</button>
+          </form>
+
+          <p class="helper">Busca exclusiva por documento (CPF/CNPJ). Exemplo registrado: 08005813180.</p>
+
+          <div id="resultSection" class="result-area" aria-live="polite">
+            <p class="empty-state">Informe o CPF/CNPJ para consultar os terminais vinculados.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay" hidden>
+      <div class="loading-box">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Consultando dados do middleware...</p>
+      </div>
+    </div>
+
+    <script src="script.js?v=20260324"></script>
+  </body>
+</html>
