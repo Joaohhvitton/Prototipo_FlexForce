@@ -250,6 +250,18 @@ body {
   color: #b11414;
 }
 
+.status-alocado {
+  background: transparent;
+  color: #0e7c35;
+}
+
+.status-desalocado {
+  background: transparent;
+  color: #b11414;
+}
+
+
+
 .feedback {
   color: #b11414;
   font-weight: 600;
