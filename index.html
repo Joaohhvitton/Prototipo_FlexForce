@@ -25,10 +25,16 @@
           <a href="#" class="menu-item">Fila de Pré-Inativação</a>
 
           <div class="menu-group">
-            <button id="configButton" class="menu-item menu-button" type="button" aria-expanded="false">
+            <button
+              id="configButton"
+              class="menu-item menu-button"
+              type="button"
+              aria-expanded="false"
+            >
               Configurações
               <span class="arrow">▾</span>
             </button>
+
             <div id="configSubmenu" class="submenu" hidden>
               <button id="openMiddlewareQuery" class="submenu-item" type="button">
                 Consulta Status Middleware
@@ -51,21 +57,24 @@
 
           <form id="searchForm" class="search-row">
             <input
-              id="documentSearch"
+              id="serialSearch"
               type="text"
-              inputmode="numeric"
-              placeholder="Digite o CPF/CNPJ (somente números)"
-              value="08005813180"
-              maxlength="14"
+              placeholder="Digite o número de série"
+              value="2256FD8F4021"
+              maxlength="20"
               autocomplete="off"
             />
             <button type="submit">Pesquisar</button>
           </form>
 
-          <p class="helper">Busca exclusiva por documento (CPF/CNPJ). Exemplo registrado: 08005813180.</p>
+          <p class="helper">
+            Busca exclusiva por número de série. Exemplo registrado: 2256FD8F4021.
+          </p>
 
           <div id="resultSection" class="result-area" aria-live="polite">
-            <p class="empty-state">Informe o CPF/CNPJ para consultar os terminais vinculados.</p>
+            <p class="empty-state">
+              Informe o número de série para consultar o histórico de vínculo de CPF.
+            </p>
           </div>
         </section>
       </main>
